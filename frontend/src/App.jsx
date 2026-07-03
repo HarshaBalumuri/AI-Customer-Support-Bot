@@ -55,7 +55,7 @@ const sendMessage = async () => {
   try {
     const token = localStorage.getItem("token");
 
-const res = await fetch("http://localhost:5000/chat", {
+const res = await fetch("https://ai-customer-support-bot-olxv.onrender.com/chat", {
   method: "POST",
   headers: {
     "Content-Type": "application/json",
@@ -116,7 +116,7 @@ useEffect(() => {
     if (!token) return;
 
     try {
-      const res = await axios.get("http://localhost:5000/api/chat", {
+      const res = await axios.get("https://ai-customer-support-bot-olxv.onrender.com/api/chat", {
         headers: {
           Authorization: `Bearer ${token}`,
         },
