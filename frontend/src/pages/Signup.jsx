@@ -17,10 +17,10 @@ function Signup({ setShowSignup }) {
 
   const handleSignup = async () => {
     try {
-      const res = await axios.post(
-        "http://localhost:5000/api/auth/signup",
-        form
-      );
+     const res = await axios.post(
+  "https://ai-customer-support-bot-olxv.onrender.com/api/auth/signup",
+  form
+);
 
       alert(res.data.message);
     } catch (error) {
