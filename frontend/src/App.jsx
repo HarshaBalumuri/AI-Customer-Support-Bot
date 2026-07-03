@@ -1,9 +1,15 @@
 import "./App.css";
 import { useState, useEffect, useRef } from "react";
-import { FaMicrophoneAlt } from "react-icons/fa";
+import { FaMicrophoneAlt, FaTrashAlt } from "react-icons/fa";
 import { jsPDF } from "jspdf";
+import Login from "./pages/Login";
+import Signup from "./pages/Signup";
+import axios from "axios";
 
 function App() {
+  const user = JSON.parse(localStorage.getItem("user"));
+  const token = localStorage.getItem("token");
+  const [showSignup, setShowSignup] = useState(false);
 const [messages, setMessages] = useState(() => {
   const saved = localStorage.getItem("chatHistory");
   
@@ -24,6 +30,11 @@ const [messages, setMessages] = useState(() => {
 
 const [loading, setLoading] = useState(false);
 const [message, setMessage] = useState("");
+const [chatHistory, setChatHistory] = useState(() => {
+  const savedHistory = localStorage.getItem("chatHistoryList");
+  return savedHistory ? JSON.parse(savedHistory) : [];
+});
+const [currentChat, setCurrentChat] = useState(0);
 const chatEndRef = useRef(null);
 const fileInputRef = useRef(null);
 const sendMessage = async () => {
@@ -42,13 +53,16 @@ const sendMessage = async () => {
   setLoading(true);
 
   try {
-    const res = await fetch("http://localhost:5000/chat", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ message }),
-    });
+    const token = localStorage.getItem("token");
+
+const res = await fetch("http://localhost:5000/chat", {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json",
+    Authorization: `Bearer ${token}`,
+  },
+  body: JSON.stringify({ message }),
+});
 
     const data = await res.json();
 setLoading(false);
@@ -89,6 +103,57 @@ useEffect(() => {
 useEffect(() => {
   localStorage.setItem("chatHistory", JSON.stringify(messages));
 }, [messages]);
+useEffect(() => {
+  localStorage.setItem(
+    "chatHistoryList",
+    JSON.stringify(chatHistory)
+  );
+}, [chatHistory]);
+useEffect(() => {
+  const loadChats = async () => {
+    const token = localStorage.getItem("token");
+
+    if (!token) return;
+
+    try {
+      const res = await axios.get("http://localhost:5000/api/chat", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      const loadedMessages = [];
+
+      res.data.forEach((chat) => {
+        loadedMessages.push({
+          sender: "user",
+          text: chat.message,
+          time: new Date(chat.createdAt).toLocaleTimeString([], {
+            hour: "2-digit",
+            minute: "2-digit",
+          }),
+        });
+
+        loadedMessages.push({
+          sender: "bot",
+          text: chat.reply,
+          time: new Date(chat.createdAt).toLocaleTimeString([], {
+            hour: "2-digit",
+            minute: "2-digit",
+          }),
+        });
+      });
+
+      if (loadedMessages.length > 0) {
+        setMessages(loadedMessages);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  loadChats();
+}, []);
 const startListening = () => {
   const SpeechRecognition =
     window.SpeechRecognition || window.webkitSpeechRecognition;
@@ -162,31 +227,78 @@ const handleFileUpload = (event) => {
     },
   ]);
 };
+const handleLogout = () => {
+  localStorage.removeItem("token");
+  localStorage.removeItem("user");
+  localStorage.removeItem("chatHistory");
+  localStorage.removeItem("chatHistoryList");
+
+  window.location.reload();
+};
+if (!user) {
+  return showSignup ? (
+    <Signup setShowSignup={setShowSignup} />
+  ) : (
+    <Login setShowSignup={setShowSignup} />
+  );
+}
 
   return (
     <div className="app">
       <div className="sidebar">
         <div className="logo">
-          🤖 <span>AI Support</span>
-        </div>
+  🤖 <span>AI Support</span>
+</div>
+
+<div
+  style={{
+    textAlign: "center",
+    marginTop: "20px",
+    marginBottom: "20px",
+    color: "white",
+  }}
+>
+  <div
+    style={{
+      width: "60px",
+      height: "60px",
+      borderRadius: "50%",
+      background: "#8b5cf6",
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+      fontSize: "24px",
+      margin: "0 auto 10px",
+    }}
+  >
+    👤
+  </div>
+
+  <h3>{user.name}</h3>
+  <small>{user.email}</small>
+</div>
 
         <button
   className="new-chat"
   onClick={() => {
-    setMessages([
-  {
-    sender: "bot",
-    text: "Hello! Welcome to Customer Support.\nHow can I help you today?",
-    time: new Date().toLocaleTimeString([], {
-      hour: "2-digit",
-      minute: "2-digit",
-    }),
-  },
-]);
-    setMessage("");
-    setLoading(false);
-    localStorage.removeItem("chatHistory");
-  }}
+     if (messages.length > 1) {
+    setChatHistory((prev) => [...prev, messages]);
+  }
+
+  setMessages([
+    {
+      sender: "bot",
+      text: "Hello! Welcome to Customer Support.\nHow can I help you today?",
+      time: new Date().toLocaleTimeString([], {
+        hour: "2-digit",
+        minute: "2-digit",
+      }),
+    },
+  ]);
+
+  setMessage("");
+  setLoading(false);
+}}
 >
   + New Chat
 </button>
@@ -195,15 +307,45 @@ const handleFileUpload = (event) => {
 </h3>
 
 <div className="history">
-  {messages
-    .filter(msg => msg.sender === "user")
-    .map((msg, index) => (
-      <p key={index}>
-        {msg.text.length > 25
-          ? msg.text.substring(0, 25) + "..."
-          : msg.text}
-      </p>
-    ))}
+  {chatHistory.map((chat, index) => (
+  <div
+    key={index}
+    style={{
+      display: "flex",
+      justifyContent: "space-between",
+      alignItems: "center",
+      marginBottom: "10px",
+    }}
+  >
+    <p
+      onClick={() => {
+        setMessages(chat);
+        setCurrentChat(index);
+      }}
+      style={{
+        cursor: "pointer",
+        margin: 0,
+        flex: 1,
+      }}
+    >
+      {chat.find(msg => msg.sender === "user")?.text.substring(0, 25) || "New Chat"}...
+    </p>
+
+    <button
+      onClick={() => {
+        setChatHistory(chatHistory.filter((_, i) => i !== index));
+      }}
+      style={{
+        background: "transparent",
+        border: "none",
+        cursor: "pointer",
+        fontSize: "18px",
+      }}
+    >
+      <FaTrashAlt />
+    </button>
+  </div>
+))}
 </div>
 
         
@@ -218,6 +360,12 @@ const handleFileUpload = (event) => {
   <button onClick={downloadChat} className="download-btn">
     📄 Download Chat
   </button>
+  <button
+  onClick={handleLogout}
+  className="logout-btn"
+>
+  🚪 Logout
+</button>
 </div>
 
         <div className="chat-box">

@@ -1,0 +1,96 @@
+body {
+  margin: 0;
+  font-family: "Poppins", sans-serif;
+}
+
+.login-container {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, #0f172a, #1e3a8a, #312e81);
+}
+
+.login-card {
+  width: 380px;
+  padding: 40px;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(12px);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+  text-align: center;
+  color: white;
+}
+
+.logo {
+  font-size: 60px;
+  margin-bottom: 10px;
+}
+
+.login-card h1 {
+  font-size: 42px;
+  line-height: 1.2;
+  margin: 15px 0 10px;
+}
+
+.login-card p {
+  color: #d1d5db;
+  margin-top: 0;
+  margin-bottom: 30px;
+  font-size: 18px;
+}
+
+.login-card input {
+  width: 100%;
+  padding: 14px;
+  margin-bottom: 18px;
+  border: none;
+  border-radius: 10px;
+  outline: none;
+  font-size: 16px;
+  box-sizing: border-box;
+}
+
+.login-card input:focus {
+  box-shadow: 0 0 8px #8b5cf6;
+}
+
+.login-card button {
+  width: 100%;
+  padding: 14px;
+  border: none;
+  border-radius: 10px;
+  background: linear-gradient(90deg, #8b5cf6, #6d28d9);
+  color: white;
+  font-size: 17px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.login-card button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(139, 92, 246, 0.4);
+}
+
+.signup-link {
+  margin-top: 20px;
+  color: #d1d5db;
+}
+
+.signup-link span {
+  color: #a78bfa;
+  font-weight: bold;
+  cursor: pointer;
+  margin-left: 6px;
+}
+
+.signup-link span:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 500px) {
+  .login-card {
+    width: 90%;
+    padding: 30px;
+  }
+}

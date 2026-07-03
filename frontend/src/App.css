@@ -16,20 +16,24 @@ color:white;
 }
 
 .sidebar{
-width:280px;
+width:340px;
 background:#111827;
 padding:25px;
 display:flex;
 flex-direction:column;
 }
 
-.logo{
-font-size:28px;
-font-weight:bold;
-margin-bottom:30px;
-display:flex;
-align-items:center;
-gap:10px;
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 32px;
+  font-weight: bold;
+  color: white;
+  margin-bottom: 25px;
+}
+.logo span {
+  font-size: 32px;
 }
 
 .new-chat{
@@ -202,7 +206,8 @@ background:#6d28d9;
 .history p {
   background: #1f2937;
   color: white;
-  padding: 12px;
+ padding: 8px 12px;
+font-size: 15px;
   border-radius: 10px;
   cursor: pointer;
   transition: 0.3s;
@@ -212,5 +217,34 @@ background:#6d28d9;
 }
 
 .history p:hover {
-  background: #374151;
+    background: #374151;
+    transform: translateX(5px);
+}
+.delete-btn {
+  background: transparent;
+  border: none;
+  color: #ff5c5c;
+  cursor: pointer;
+  font-size: 16px;
+  transition: 0.3s;
+}
+
+.delete-btn:hover {
+  color: #ff0000;
+  transform: scale(1.2);
+}
+.logout-btn {
+  background: #ef4444;
+  color: white;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 10px;
+  font-size: 15px;
+  cursor: pointer;
+  transition: 0.3s;
+  margin-left: 10px;
+}
+
+.logout-btn:hover {
+  background: #dc2626;
 }
