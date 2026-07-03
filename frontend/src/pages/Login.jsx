@@ -17,10 +17,10 @@ function Login({ setShowSignup }) {
 
   const handleLogin = async () => {
     try {
-      const res = await axios.post(
-        "http://localhost:5000/api/auth/login",
-        form
-      );
+     const res = await axios.post(
+  "https://ai-customer-support-bot-olxv.onrender.com/api/auth/login",
+  form
+);
 
       if (res.data.token) {
         localStorage.setItem("token", res.data.token);
