@@ -2,6 +2,12 @@
 
 An AI-powered customer support chatbot built using the MERN Stack.
 
+## 🌐 Live Demo
+
+**Frontend:** https://ai-customer-support-bot-frontend.onrender.com
+
+**Backend API:** https://ai-customer-support-bot-olxv.onrender.com
+
 ## ✨ Features
 
 - User Authentication (Signup/Login)
