@@ -1,5 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
+import "./Login.css";
 
 function Signup({ setShowSignup }) {
   const [form, setForm] = useState({
@@ -17,62 +18,58 @@ function Signup({ setShowSignup }) {
 
   const handleSignup = async () => {
     try {
-     const res = await axios.post(
+      const res = await axios.post(
   "https://ai-customer-support-bot-olxv.onrender.com/api/auth/signup",
   form
 );
 
       alert(res.data.message);
+      setShowSignup(false);
     } catch (error) {
       alert("Signup Failed");
     }
   };
 
   return (
-    <div
-      style={{
-        maxWidth: "400px",
-        margin: "80px auto",
-        display: "flex",
-        flexDirection: "column",
-        gap: "15px",
-      }}
-    >
-      <h2>Signup</h2>
+    <div className="login-container">
+      <div className="login-card">
+        <div className="logo">🤖</div>
 
-      <input
-        type="text"
-        name="name"
-        placeholder="Name"
-        onChange={handleChange}
-      />
+        <h1>Create Account</h1>
+        <p>Join AI Customer Support</p>
 
-      <input
-        type="email"
-        name="email"
-        placeholder="Email"
-        onChange={handleChange}
-      />
+        <input
+          type="text"
+          name="name"
+          placeholder="👤 Name"
+          onChange={handleChange}
+        />
 
-      <input
-        type="password"
-        name="password"
-        placeholder="Password"
-        onChange={handleChange}
-      />
+        <input
+          type="email"
+          name="email"
+          placeholder="📧 Email"
+          onChange={handleChange}
+        />
 
-      <button onClick={handleSignup}>
-        Signup
-      </button>
-      <p style={{ textAlign: "center" }}>
-  Already have an account?{" "}
-  <span
-    style={{ color: "blue", cursor: "pointer" }}
-    onClick={() => setShowSignup(false)}
-  >
-    Login
-  </span>
-</p>
+        <input
+          type="password"
+          name="password"
+          placeholder="🔒 Password"
+          onChange={handleChange}
+        />
+
+        <button onClick={handleSignup}>
+          Signup
+        </button>
+
+        <div className="signup-link">
+          Already have an account?
+          <span onClick={() => setShowSignup(false)}>
+            Login
+          </span>
+        </div>
+      </div>
     </div>
   );
 }
