@@ -61,6 +61,61 @@ npm install
 npm run dev
 ```
 
+
+
+
+## 📂 Project Structure
+
+```text
+AI-Customer-Support-Bot/
+├── backend/
+│   ├── server.js
+│   ├── package.json
+│   └── ...
+├── frontend/
+│   ├── src/
+│   │   ├── pages/
+│   │   ├── assets/
+│   │   └── App.jsx
+│   └── package.json
+└── README.md
+```
+
+## 🔌 API Endpoints
+
+### Authentication
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| POST | /api/auth/signup | Register a new user |
+| POST | /api/auth/login | Login user |
+
+### Chat
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| POST | /api/chat | Send a message to the AI chatbot |
+| GET | /api/history | Get chat history |
+
+
+## 🚀 Future Improvements
+
+- Voice-based AI support
+- Multi-language chatbot
+- Email notifications
+- Admin dashboard
+- Dark mode UI
+- AI conversation summaries
+- Real-time customer analytics
+
+---
+
+## 📄 License
+
+This project is licensed under the MIT License.
+
+---
+
 ## 👨‍💻 Author
 
-**Harsha Balumuri**
+**Harsha Balamuri**
