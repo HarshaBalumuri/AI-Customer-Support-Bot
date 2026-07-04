@@ -25,23 +25,23 @@ An AI-powered customer support chatbot built using the MERN Stack.
 
 ### Login Page
 
-![Login](frontend/src/screenshots/login-page.png)
+![Login](frontend/src/pages/screenshots/login-page.png)
 
 ### Signup Page
 
-![Signup](frontend/src/screenshots/signup-page.png)
+![Signup](frontend/src/pages/screenshots/signup-page.png)
 
 ### Home Page
 
-![Home](frontend/src/screenshots/home-page.png)
+![Home](frontend/src/pages/screenshots/home-page.png)
 
 ### Chat Interface
 
-![Chat Interface](frontend/src/screenshots/chat-interface.png)
+![Chat Interface](frontend/src/pages/screenshots/chat-interface.png)
 
 ### Chat History
 
-![Chat History](frontend/src/screenshots/chat-history.png)
+![Chat History](frontend/src/pages/screenshots/chat-history.png)
 
 ## 🚀 Installation
 
